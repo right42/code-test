@@ -1,16 +1,19 @@
 package me.right.codetest;
 
+import me.right.codetest.annotation.SlowTest;
 import me.right.codetest.modules.FindSlowTestExtension;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import java.util.concurrent.TimeUnit;
 
-@ExtendWith(FindSlowTestExtension.class)
 public class StudyTest {
 
-    @Test
+    @RegisterExtension
+    static FindSlowTestExtension findSlowTestExtension =
+            new FindSlowTestExtension();
+
+    @SlowTest
     void slowTest() throws InterruptedException {
         TimeUnit.SECONDS.sleep(2L);
 

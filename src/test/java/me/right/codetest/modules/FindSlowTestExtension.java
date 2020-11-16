@@ -1,5 +1,6 @@
 package me.right.codetest.modules;
 
+import me.right.codetest.annotation.SlowTest;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -21,10 +22,13 @@ public class FindSlowTestExtension implements BeforeTestExecutionCallback, After
         String testClassName = context.getRequiredTestClass().getName();
         String testMethodName = context.getRequiredTestMethod().getName();
         ExtensionContext.Store store = context.getStore(ExtensionContext.Namespace.create(testClassName, testMethodName));
+
+        SlowTest annotation = context.getRequiredTestMethod().getAnnotation(SlowTest.class);
+
         long startTime = store.remove("START_TIME", long.class);
 
         long duration = System.currentTimeMillis() - startTime;
-        if(duration > THRESHOLD) {
+        if(duration > THRESHOLD && annotation == null) {
             System.out.printf("Please consider mark method [%s] with @SlowTest. \n", testMethodName);
         }
 
