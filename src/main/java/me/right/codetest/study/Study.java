@@ -2,11 +2,17 @@ package me.right.codetest.study;
 
 import me.right.codetest.member.Member;
 
+import java.time.LocalDateTime;
+
 public class Study {
 
     private String name;
 
     private Member owner;
+
+    private StudyStatus studyStatus = StudyStatus.CLOSED;
+
+    private LocalDateTime openedDateTime;
 
     public Study(String name, Member owner) {
         this.name = name;
@@ -29,5 +35,18 @@ public class Study {
 
     public Member getOwner() {
         return owner;
+    }
+
+    public StudyStatus getStudyStatus() {
+        return studyStatus;
+    }
+
+    public LocalDateTime getOpenedDateTime() {
+        return openedDateTime;
+    }
+
+    public void open() {
+        this.studyStatus = StudyStatus.OPENED;
+        this.openedDateTime = LocalDateTime.now();
     }
 }
