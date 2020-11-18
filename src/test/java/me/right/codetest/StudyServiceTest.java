@@ -8,6 +8,7 @@ import me.right.codetest.study.StudyService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -76,5 +77,13 @@ class StudyServiceTest {
 
         assertThat(newStudy.getName()).isNotNull();
         assertThat(newStudy.getOwner()).isEqualTo(member);
+
+        verify(memberService, times(1)).notify(newStudy);
+//        verify(memberService, times(1)).notify(member);
+//        verify(memberService, never()).validate(any());
+        verifyNoMoreInteractions(memberService);
+
     }
+
 }
+
